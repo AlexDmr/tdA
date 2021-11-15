@@ -1,0 +1,14 @@
+{
+    "configurations": [
+      {
+        "type": "xslt",
+        "request": "launch",
+        "name": "Debug XSLT File",
+        "xslPath": "${workspaceFolder}/Meteo2RSS.xsl",
+        "sourcePath": "${workspaceFolder}/meteo_VillarddeLans_122017.xml",
+        "destinationPath": "${workspaceFolder}/monRSS.xml",
+        "parameters": {
+        }
+      }
+    ]
+  }

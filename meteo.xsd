@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:met="http://www.meteo-france.fr/bulletin"
+           xmlns:kml="http://www.opengis.net/kml/2.2"
+           targetNamespace="http://www.meteo-france.fr/bulletin"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="http://www.opengis.net/kml/2.2" 
+               schemaLocation="http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd"/>
+    <xs:import namespace="http://www.google.com/kml/ext/2.2" 
+               schemaLocation="http://code.google.com/apis/kml/schema/kml22gx.xsd"/>
+    
+    <!-- élément racine -->
+
+    <!-- Type Météo -->
+
+    <!-- Type Période -->
+    <xs:complexType name="Période">
+        <xs:attribute name="année" type="xs:gYear" use="required"></xs:attribute>
+        <xs:attribute name="mois" type="xs:gMonth" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <!-- Type Bulletin -->
+    <!-- Type ValeurTempérature -->
+    <xs:simpleType name="ValeurTempérature">
+        <xs:restriction base="xs:double">
+            <xs:minExclusive value="-273"></xs:minExclusive>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Type Température -->
+    <xs:complexType name="Température">
+        <xs:simpleContent>
+            <xs:extension base="met:ValeurTempérature">
+                <xs:attribute name="isothermeZero" type="xs:integer" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- Type Anémométrie -->
+    <!-- Type Direction -->
+    <xs:simpleType name="Direction">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="N"></xs:enumeration>
+            <xs:enumeration value="S"></xs:enumeration>
+            <xs:enumeration value="E"></xs:enumeration>
+            <xs:enumeration value="O"></xs:enumeration>
+            <xs:enumeration value="NO"></xs:enumeration>
+            <xs:enumeration value="SO"></xs:enumeration>
+            <xs:enumeration value="SE"></xs:enumeration>
+            <xs:enumeration value="NE"></xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Type Précipitations -->
+    <xs:complexType name="Précipitations">
+        <xs:sequence>
+            <xs:element name="niveau" type="met:DoublePositif" minOccurs="0" maxOccurs="1"></xs:element>
+        </xs:sequence>
+        <xs:attribute name="type" 
+                      use="required"
+                      type="met:TypePrécipitation"></xs:attribute>
+    </xs:complexType>
+
+    <!-- Type TypePrécipitation -->
+    <xs:simpleType name="TypePrécipitation">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="aucune"></xs:enumeration>
+            <xs:enumeration value="neige"></xs:enumeration>
+            <xs:enumeration value="pluie"></xs:enumeration>
+            <xs:enumeration value="grésil"></xs:enumeration>
+            <xs:enumeration value="grêle"></xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Type DoublePositif -->
+    <xs:simpleType name="DoublePositif">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="0"></xs:minInclusive>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
